@@ -1,0 +1,143 @@
+git config --global user.name = ""
+git config --global user.email = 
+git config --global init.defaultBranch main
+git config --global --list --show-origin
+git config --global credential.helper store || git config --global credential.helper cache
+
+Chaves SSH:
+https://docs.github.com/pt/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys
+https://docs.github.com/pt/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+$ cd ~/.ssh
+$ ls
+$ cat id_ed25529.pub
+https://github.com/settings/keys
+
+# (* = OPCIONAL)
+# ⚠️ (O Git não reconhece pastas e repositórios vazios)
+CRIAÇÃO DE REPOSITÓRIO LOCAL:
+
+  git init
+    -> inicializa um repositório em uma pasta local
+
+  git status
+    -> mostra status da árvore de trabalho e da área de
+      preparação (arquivos a serem empacotados em um commit)
+
+  git add nome-do-arquivo
+    -> adiciona arquivo na área de preparação
+    -> torcando nome-do-arquivo por . faz com que adicione todos
+      os arquivos recentes na área de preparação
+
+  git commit -m "mensagem"
+    -> grava alterações no repositório local
+
+  git log
+    -> mostra registros das alterações no repositório
+
+  echo pasta-arquivo/ > .gitignore
+    -> adicina pasta ou arquivo para ser ignorado pelo git
+
+  echo > .gitignore
+    -> devolve pasta ou arquivo para o reconhecimento do git
+
+  touch pasta/.gitkeep
+    -> cria arquivo para incluir um diretório(pasta) vazio no git
+
+FIM DE CRIAÇÃO DE REPOSITÓRIO LOCAL
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+DESFAZENDO ALTERAÇÕES NO REPOSITÓRIO LOCAL
+
+  rm -rf .git
+    -> remove git iniciado na pasta
+
+  git restore nome-do-arquivo
+    -> descarta as alterações do arquivo na árvore de trabalho
+      feitas localmente
+
+  git commit --amend -m "nova-mensagem"
+    -> altera mensagem do último commit
+
+  git reset --opções hash-do-commit
+    -> desfaz o último commit
+    -> --opções:
+      ¹ soft - devolve as alterações desfeitas para a área de
+        prepação
+      ² mixed - opção padrão (não precisa escrever)
+                devolve as alterações desfeitas para a árvore
+                de trabalho (ainda não adicionados para commit)
+      ³ hard - apaga os arquivos desfeitos
+
+  git reset pasta/arquivo || git restore --staged pasta/arquivo
+    -> retira arquivo da área de preparação
+
+  git reflog
+    -> histórico detalhado das alterações realizadas
+
+FIM DE DESFAZENDO ALTERAÇÕES NO REPOSITÓRIO LOCAL
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+ENVIANDO ALTERAÇÕES PARA O REPOSITÓRIO REMOTO
+
+  git remote add origin URL
+    -> vincula repositório local à um repositório remoto
+
+  git push -u origin main
+  -> envia as alterções do repositório local para o remoto
+
+FIM DE ENVIANDO ALTERAÇÕES PARA O REPOSITÓRIO REMOTO
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+BAIXANDO ALTERAÇÕES PARA O REPOSITÓRIO LOCAL
+
+  git pull
+    -> busca e mescla as alterações do repositório remoto para o local
+
+FIM DE BAIXANDO ALTERAÇÕES PARA O REPOSITÓRIO LOCAL
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+TRABALHANDO COM BRANCHS
+
+  git checkout -b nome-da-branch
+    -> troca para a branch criada
+
+  git branch -v
+    -> mostra o último commit de cada branch criada
+  
+  git merge nome-da-branch
+    -> mescla a branch atual com a branch especificada
+
+  git branch
+    -> lista as branchs existentes no repositório
+
+  git branch -d nome-da-branch
+    -> deleta a branch especificada
+  
+  git fetch origin nome-da-branch
+    -> baixa as alterações do repositório remoto para o local sem mesclar com o repositório local
+
+  git diff branch-1 branch-2
+    -> exibe as diferenças entre os branchs
+
+  git stash
+    -> arquiva as modificações
+
+  git stash list
+    -> lista as modificações arquivada
+
+  git stash pop
+    -> traz de volta as modificações arquivadas para a branch e exclui a alteração mais recente do arquivo
+
+  git stash apply
+    -> traz de volta as modificações arquivadas para a branch, mas mantém a alteração arquivada
+  
+FIM DE TRABALHANDO COM BRANCHS
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+git branch -M especifica-a-branch
+  -> Especifica a branch para qual as alterações são enviadas
+
+git remote -v
+  -> mostra repositórios remotos que está vinculado;
+
+git clone URL *¹ *² -> Clona um repositório remoto para a máquina local.
+  *¹ -> --branch nome-da-branch --single-branch
+    Especificar uma branch para clonar (--branch nome-da-branch),
+    não especificando, ele clona apenas a branch principal (--single-branch)
+  *² -> nome-da-pasta
+    Novo nome para a pasta local
